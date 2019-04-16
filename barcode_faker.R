@@ -74,7 +74,6 @@ barcode_faker <- function(fastq_dir, read_length = 100L){
   #stop if files with the fake file names already exist
   workdir <- getwd()
   dirfil <- list.files(path = workdir, full.names = FALSE)
-  
   if(sum(newfile_names %in% dirfil) != 0){
     stop("Files in your working directory seem to have same names as those
          output by this function. Please move them, delete them, or choose a new working directory.")
