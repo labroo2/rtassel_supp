@@ -10,7 +10,7 @@ written for Windows users, and I will update it later for Mac users.
 1. Install R and RStudio if you haven't. (See other online guides.)
 2. Open RStudio.
 3. There are three ways to import the function. You only need to do one. EITHER:
-      a. Click this link: https://github.com/labroo2/rtassel_supp/blob/master/barcode_faker.R
+         a. Click this link: https://github.com/labroo2/rtassel_supp/blob/master/barcode_faker.R
          Copy all the function text, starting from "This function adds fake barcodes"
          and ending at line 116.
          Paste the function text into the Console tab of RStudio. (The Console tab is usually in the
@@ -18,8 +18,8 @@ written for Windows users, and I will update it later for Mac users.
          Hit Enter.
       
       OR
-         
-      b. Right-click barcode_faker.R on this webpage (above).
+
+         b. Right-click barcode_faker.R on this webpage (above).
          Select "Save link as..."
          Go to a folder where the function will be saved. For example, you could select your Documents folder.
          Click save.
