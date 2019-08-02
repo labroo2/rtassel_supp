@@ -63,17 +63,17 @@ written for Windows users, and I will update it later for Mac users.
  9. This step may be tricky, so try not to get frustrated. Open File Explorer, then navigate to the folder where your
  FASTQs are (myFASTQs in our example). Open the folder. You should see all your FASTQ files inside. Right-click one of
  the FASTQ files (doesn't matter which one), then click "Properties". A box will pop up. Where it says "Location:", you
- will see something like C:\Users\yourname\Documents\tasselFASTQs . It may be slightly different. But go ahead and copy
+ will see something like C:\Users\yourname\Documents\myFASTQs . It may be slightly different. But go ahead and copy
  that text after location.
  
  10. Now, go to RStudio. In the Console, type barcode_faker(
  
- 11. Paste the location (from Step 9). Now you have something like barcode_faker(C:\Users\yourname\Documents\tasselFASTQs
+ 11. Paste the location (from Step 9). Now you have something like barcode_faker(C:\Users\yourname\Documents\myFASTQs
  
- 12. Change all the backslashes to forward slashes. Now you have something like barcode_faker(C:/Users/yourname/Documents/tasselFASTQs
+ 12. Change all the backslashes to forward slashes. Now you have something like barcode_faker(C:/Users/yourname/Documents/myFASTQs
  
  13. Type a comma, a space, the read length from step 7, then end the parenthesis. You have now have
-      barcode_faker(C:/Users/yourname/Documents/tasselFASTQs, 260)
+      barcode_faker(C:/Users/yourname/Documents/myFASTQs, 260)
  
  14. Hit Enter. The program will start running! Your output files should go to the folder you made in Step 6. You
      will know the program is done when you see a blue > at the start of the line in the console again.
