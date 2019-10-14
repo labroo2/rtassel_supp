@@ -29,7 +29,7 @@ file names to be repeated.")
   fastqs <- list.files(path = fastq_dir, full.names = TRUE)
   
   #check that all files in dir are fastqs
-  if(length(grep(".fastq", fastqs)) != length(fastqs) && length(grep(".fq", fastqs)) != length(fastqs) &&
+  if(length(grep(".fastq", fastqs)) != length(fastqs) | length(grep(".fq", fastqs)) != length(fastqs) &&
      length(grep(".fastq", fastqs)) != 0 && length(grep(".fq", fastqs)) != 0){
     stop("Not all of the files in your input folder seem to have .fq or .fastq extensions. Please move or delete such files.")
   }
