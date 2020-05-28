@@ -1,4 +1,7 @@
 # barcode_faker.R
+Update: Luis Diaz enabled parallelization of barcode_faker; please see barcode_faker_parallel.R
+You will need to install the doSNOW package. This can greatly speed up the function if you have
+access to multiple cores. Thanks Luis!
 
 Here's a brief guide to get you started using the barcode_faker function in R! Many researchers who use TASSEL
 don't regularly work with the command line. Don't worry-- you don't need to be an R expert to use this function.
@@ -9,31 +12,32 @@ written for Windows users, and I will update it later for Mac users.
 
 1. Install R and RStudio if you haven't. (See other online guides.)
 2. Open RStudio.
-3. There are three ways to import the function. You only need to do one. EITHER:
+3. There are many ways to import the function, but here are three easy options. You only need to do one of these: pick a, b, or c.
          
-         a. Go to this link: https://github.com/labroo2/rtassel_supp/blob/master/barcode_faker.R
-         Copy all the function text, starting from "This function adds fake barcodes"
-         and ending at line 116.
-         Paste the function text into the Console tab of RStudio. (The Console tab is usually in the
+         a. 
+         1. Go to this link: https://github.com/labroo2/rtassel_supp/blob/master/barcode_faker.R
+         2. Copy all the function text, starting from # on line 1 and ending at line 116.
+         3. Paste the function text into the Console tab of RStudio. (The Console tab is usually in the
          bottom right of RStudio, and it usually has a blue > starting the first line.)
-         Hit Enter.
+         4. Hit Enter.
       
       OR
 
-         b. Right-click barcode_faker.R on this webpage (above).
-         Select "Save link as..."
-         Go to a folder where the function will be saved. For example, you could select your Documents folder.
-         Click save.
-         Open File Explorer or Finder. Navigate to the folder where you saved the function, and double-click on
+         b. 
+         1. Right-click barcode_faker.R on this webpage (above).
+         2. Select "Save link as..."
+         3. Go to a folder where you want to save the function. For example, you could select your Documents folder.
+         4. Click save.
+         5. Open File Explorer or Finder. Navigate to the folder where you saved the function, and double-click on
          your barcode_faker.R file. It should open in RStudio. If it doesn't, you can right-click barcode_faker.R
          and click Open With, then click RStudio.
-         Once the file is opened in RStudio, highlight all of the text, which will be in the top left of RStudio.
+         6. Once the file is opened in RStudio, highlight all of the text, which will be in the top left of RStudio.
          While the text is highlighted, click "Run" in RStudio. It is a small button with a green arrow above
          the text of the function.
       
       OR
       
-         c. Clone into the repository.
+         c. Use source() on the path to the saved function file, or clone into the repository.
       
       You only need to do one of a, b, or c.
       
