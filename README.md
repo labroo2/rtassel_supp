@@ -18,7 +18,7 @@ written for Windows users, and I will update it later for Mac users.
          1. Go to this link: https://github.com/labroo2/rtassel_supp/blob/master/barcode_faker.R
          2. Copy all the function text, starting from # on line 1 and ending at line 116.
          3. Paste the function text into the Console tab of RStudio. (The Console tab is usually in the
-         bottom right of RStudio, and it usually has a blue > starting the first line.)
+         bottom left of RStudio, and it usually has a blue > starting the first line.)
          4. Hit Enter.
       
       OR
@@ -76,8 +76,8 @@ written for Windows users, and I will update it later for Mac users.
  
  12. Change all the backslashes to forward slashes. Now you have something like barcode_faker(C:/Users/yourname/Documents/myFASTQs
  
- 13. Type a comma, a space, the read length from step 7, then end the parenthesis. You have now have
-      barcode_faker(C:/Users/yourname/Documents/myFASTQs, 260)
+ 13. Type a comma, a space, the read length from step 7, then end the parenthesis. Add quotation marks around the location. You have now have
+      barcode_faker("C:/Users/yourname/Documents/myFASTQs", 260)
  
  14. Hit Enter. The program will start running! Your output files should go to the folder you made in Step 6. You
      will know the program is done when you see a blue > at the start of the line in the console again.
