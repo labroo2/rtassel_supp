@@ -25,13 +25,22 @@ file names to be repeated.")
   #set read length to integer
   read_length <- as.integer(read_length)
   
-  #get the fastq file paths
+ #get the fastq file paths
   fastqs <- list.files(path = fastq_dir, full.names = TRUE)
+  fastq.check <- list.files(path = fastq_dir, full.names = FALSE)
   
-  #check that all files in dir are fastqs
-  if(length(grep(".fastq", fastqs)) != length(fastqs) | length(grep(".fq", fastqs)) != length(fastqs) &&
-     length(grep(".fastq", fastqs)) != 0 && length(grep(".fq", fastqs)) != 0){
-    stop("Not all of the files in your input folder seem to have .fq or .fastq extensions. Please move or delete such files.")
+  #check that all files in dir are fastqs         #bug fixed 28 July 2020- reported by Dr. Smit Dhakal
+  long <- length(grep(".fastq", fastq.check))
+  short <- length(grep(".fq", fastq.check))
+  if(long != 0){
+    if(length(fastq.check) != long){
+      stop("Not all of the files in your input folder seem to have .fq or .fastq extensions. Please move or delete such files.")
+    }
+  }
+  if(short != 0){
+    if(length(fastq.check) != short){
+      stop("Not all of the files in your input folder seem to have .fq or .fastq extensions. Please move or delete such files.")
+    }
   }
   
   #loop through the files to get a vector of trimmed read lengths
