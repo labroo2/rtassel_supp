@@ -17,7 +17,7 @@
 # Never delete your original FASTQ files after running barcode_faker, and remember to back up the originals. 
 # Marlee R. Labroo, dulynoted713@gmail.com, 7 April 2019.
 
-barcode_faker <- function(fastq_dir, read_length = 100L){
+barcode_faker <- function(fastq_dir, read_length = 100L, restriction_site = "C[AT]GC"){
   print("Always run barcode_faker on a folder containing all files you intend to use in a given GBSv2 run. Multiple separate runs
 of barcode_faker can cause barcodes to be repeated across sample files, though unlikely, and will certainly cause
 file names to be repeated.")
@@ -59,6 +59,7 @@ file names to be repeated.")
       fake_barcodes[i] <- paste(sample(c("A", "T" ,"C" ,"G"), size = read_length - sequence_lengths[i],
                                        replace = TRUE), collapse = "")
     }
+    fake_barcodes <- gsub(restriction_site, replacement = "AAAA", x = fake_barcodes) #this avoids enzyme cut sites in the barcodes
     if(length(fake_barcodes) == length(unique(fake_barcodes))){
       return(fake_barcodes)
     } else {
