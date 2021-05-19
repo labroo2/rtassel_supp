@@ -3,7 +3,7 @@
 # Remember to use install.packages() to install doSNOW. Set the number of cores with the n.cores option. 
 # Please see barcode_faker.R for other documentation.
 
-barcode_faker <- function(fastq_dir, read_length = 100L,n.cores=25){
+barcode_faker <- function(fastq_dir, read_length = 100L, n.cores=25, restriction_site = "C[AT]GC"){
   print("Always run barcode_faker on a folder containing all files you intend to use in a given GBSv2 run. Multiple separate runs
 of barcode_faker can cause barcodes to be repeated across sample files, though unlikely, and will certainly cause
 file names to be repeated.")
@@ -36,6 +36,7 @@ file names to be repeated.")
       fake_barcodes[i] <- paste(sample(c("A", "T" ,"C" ,"G"), size = read_length - sequence_lengths[i],
                                        replace = TRUE), collapse = "")
     }
+    fake_barcodes <- gsub(restriction_site, replacement = "AAAA", x = fake_barcodes)
     if(length(fake_barcodes) == length(unique(fake_barcodes))){
       return(fake_barcodes)
     } else {
