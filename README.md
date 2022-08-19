@@ -1,14 +1,12 @@
 # barcode_faker.R
-Update: Luis Diaz enabled parallelization of barcode_faker; please see barcode_faker_parallel.R
-You will need to install the doSNOW package. This can greatly speed up the function if you have
-access to multiple cores. Thanks Luis!
+Update: If you have access to multiple cores, use the faster parallelized version (barcode_faker_parallel.R) by Luis Diaz. You will need to install the doSNOW package.
 
 Here's a brief guide to get you started using the barcode_faker function in R! Many researchers who use TASSEL
 don't regularly work with the command line. Don't worry-- you don't need to be an R expert to use this function.
 Remember, you only need to process your files with barcode_faker if they are demultiplexed. If your files are
 demultiplexed, then each of your individuals is in a different FASTQ file. If your file isn't demultiplexed, then
 you have a really big file for each lane of sequencing you did, and you don't need this function. This guide was
-written for Windows users, and I will update it later for Mac users. 
+written for Windows users- some of the details may be a little different if you are on a Mac.
 
 1. Install R and RStudio if you haven't. (See other online guides.)
 2. Open RStudio.
@@ -55,31 +53,29 @@ written for Windows users, and I will update it later for Mac users.
  6. Once your files are unzipped, make a new folder where your output files will go. For example, if your FASTQ files
  are inside your Documents folder inside another folder called myFASTQs, you could make another folder in the Documents
  folder called tasselFASTQs. If your original FASTQs are in more than one folder (for example, lane1, lane2, lane3), then
- you must move them all into the same folder to guarantee the function will work.
+ you must move them all into the same folder (for example, myFASTQs) to guarantee the function will work.
  
- 7. Find out the read length from your sequencing run. Usually the read length is 100 or 150. Rarely, it may be 200 or 250. If
- you don't know the read length, you can just use 260.
- 
- 8. Now, go back to RStudio. Click "Session", then "Set Working Directory", then "Choose Directory". Navigate to the new
+ 7. Now, go back to RStudio. Click "Session", then "Set Working Directory", then "Choose Directory". Navigate to the new
  folder where you want your output files to go (tasselFASTQs in our example). Don't skip this step, or it will be hard to
  find your output files later. If you do forget, check the Documents folder first for your output files.
  
- 9. This step may be tricky, so try not to get frustrated. Open File Explorer, then navigate to the folder where your
+ 8. This step may be tricky, so try not to get frustrated. Open File Explorer, then navigate to the folder where your
  FASTQs are (myFASTQs in our example). Open the folder. You should see all your FASTQ files inside. Right-click one of
  the FASTQ files (doesn't matter which one), then click "Properties". A box will pop up. Where it says "Location:", you
  will see something like C:\Users\yourname\Documents\myFASTQs . It may be slightly different. But go ahead and copy
  that text after location.
  
- 10. Now, go to RStudio. In the Console, type barcode_faker(
+ 9. Now, go to RStudio. In the Console, type barcode_faker(
  
- 11. Paste the location (from Step 9). Now you have something like barcode_faker(C:\Users\yourname\Documents\myFASTQs
+ 10. Paste the location (from Step 9). Now you have something like barcode_faker(C:\Users\yourname\Documents\myFASTQs
  
- 12. Change all the backslashes to forward slashes. Now you have something like barcode_faker(C:/Users/yourname/Documents/myFASTQs
+ 11. Change all the backslashes to forward slashes. Now you have something like barcode_faker(C:/Users/yourname/Documents/myFASTQs
  
- 13. Type a comma, a space, the read length from step 7, then end the parenthesis. Add quotation marks around the location. You have now have
-      barcode_faker("C:/Users/yourname/Documents/myFASTQs", 260)
+ 12. Then, end the parenthesis. Add quotation marks around the location. You have now have
+      barcode_faker("C:/Users/yourname/Documents/myFASTQs")
  
- 14. Hit Enter. The program will start running! Your output files should go to the folder you made in Step 6. You
+ 13. Hit Enter. The program will start running! Your output files should go to the folder you made in Step 6.
+     If not, they are in your working directory. The script will print when each of your files is finished. You
      will know the program is done when you see a blue > at the start of the line in the console again.
  
  
