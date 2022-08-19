@@ -3,13 +3,8 @@
 # Remember to use install.packages() to install doSNOW. Set the number of cores with the n.cores option. 
 # Please see barcode_faker.R for other documentation.
 
-barcode_faker <- function(fastq_dir, read_length = 100L,n.cores=25){
-  print("Always run barcode_faker on a folder containing all files you intend to use in a given GBSv2 run. Multiple separate runs
-of barcode_faker can cause barcodes to be repeated across sample files, though unlikely, and will certainly cause
-file names to be repeated.")
-  
-  #set read length to integer
-  read_length <- as.integer(read_length)
+barcode_faker <- function(fastq_dir, n.cores=25){
+  print("Always run barcode_faker on a folder containing all files you intend to use in a given GBSv2 run. Multiple separate runs of barcode_faker can cause barcodes to be repeated across sample files, though unlikely, and will certainly cause file names to be repeated.")
   
   #get the fastq file paths
   fastqs <- list.files(path = fastq_dir, full.names = TRUE)
@@ -20,46 +15,49 @@ file names to be repeated.")
     stop("Not all of the files in your input folder seem to have .fq or .fastq extensions. Please move or delete such files.")
   }
   
-  #loop through the files to get a vector of trimmed read lengths
-  sequence_lengths <- c()
-  for(i in 1:length(fastqs)){
-    incon <- file(fastqs[i], open = "r")
-    sequence_lengths[i] <- nchar(readLines(incon, n = 4L, warn = FALSE)[2])
-    close(incon, warn = FALSE)
-  }
+    # new method: given a number of input files, determine the min barcode length needed to ensure enough unique barcodes are generated
+  # the old way failed if a lot of files had short barcodes of the same length- reported 18 Aug 2022 by Meghan Brady
+  # https://www.calculatorsoup.com/calculators/discretemathematics/combinationsreplacement.php
+  # n = 4
+  # r = min barcode length
+  # C = number of files
+  # solve for r considering n and C are given
+  C <- length(fastqs)
+  constant <- (factorial(3) * C) - 6 # get the constant
+  r <- round(polyroot(c(constant, -11, -6, -1)), 2) # get the roots of the polynomial
+  r <- ceiling(Re(r)[Re(r) > 0]) # subset the real and positive roots, and round up
+  if(r < 4){r <- 4} # keep a minimum barcode length of 4, probably unnecessary
+
   
   #this function recursively makes a vector of unique fake barcodes to ensure no non-unique barcodes are generated
   #this step does not protect against enzyme cut site being found in the barcode
-  barcode_inventor <- function(fake_barcodes, read_length, sequence_lengths){
+  barcode_inventor <- function(fake_barcodes, r){
     fake_barcodes <- c()
-    for(i in 1:length(sequence_lengths)){
-      fake_barcodes[i] <- paste(sample(c("A", "T" ,"C" ,"G"), size = read_length - sequence_lengths[i],
-                                       replace = TRUE), collapse = "")
+    
+    # make some barcodes of the length needed to ensure unique barcodes for all files are possible
+    for(i in 1:length(fastqs)){
+      fake_barcodes[i] <- paste(sample(c("A", "T", "C", "G"), size = r, replace = TRUE), collapse = "")
     }
+    
+    # check if the barcodes are all unique
     if(length(fake_barcodes) == length(unique(fake_barcodes))){
       return(fake_barcodes)
     } else {
       barcode_inventor
     }
   }
-  fake_barcodes <- barcode_inventor(fake_barcodes, read_length, sequence_lengths)
+  fake_barcodes <- barcode_inventor(fake_barcodes, r)
 
   #make the fake perfect quality scores matching the barcode length
-  fake_quals <- c()
-  for(i in 1:length(sequence_lengths)){
-    fake_quals[i] <- paste(rep("E", times = read_length - sequence_lengths[i]), collapse = "")
-  }
+  fake_quals <- rep(paste(rep("E", times = r), collapse = ""), times = length(fastqs))
+     
   
   #make fake header files for FASTQ reads
   #headers are totally fake (do not refer to input file)
   #fake headers allows interoperability between TASSEL and demultiplexing software FASTQ formats
-  fake_headers <- c()
-  fake_start <- "D00553R:56:"
-  fake_flowcell_base <- "C8B56ANXX"
   fake_flowcell_no <- seq(from = 1, to = length(fastqs), by = 1)
-  fake_ends <- ":3:1101:1203:2037 1:N:0:3"
-  fake_headers <- paste(fake_start, fake_flowcell_base, fake_flowcell_no, fake_ends, sep = "")
-  fake_flowcells <- paste(fake_flowcell_base, fake_flowcell_no, sep = "")
+  fake_headers <- paste("D00553R:56:", "C8B56ANXX", fake_flowcell_no, ":3:1101:1203:2037 1:N:0:3", sep = "")
+  fake_flowcells <- paste("C8B56ANXX", fake_flowcell_no, sep = "")
   fake_lanes <- rep(3, times = length(fastqs))
   
   #make fake file names that appropriately reference fake flowcell and lane
