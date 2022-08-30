@@ -14,7 +14,7 @@ written for Windows users- some of the details may be a little different if you 
          
          a. 
          1. Go to this link: https://github.com/labroo2/rtassel_supp/blob/master/barcode_faker.R
-         2. Copy all the function text, starting from # on line 1 and ending at line 116.
+         2. Copy all the function text, starting from # on line 1 and ending at line 125.
          3. Paste the function text into the Console tab of RStudio. (The Console tab is usually in the
          bottom left of RStudio, and it usually has a blue > starting the first line.)
          4. Hit Enter.
